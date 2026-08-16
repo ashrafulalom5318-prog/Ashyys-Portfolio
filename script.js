@@ -1,10 +1,8 @@
 // ═══════════════════════════════════════════
-//  MAIN SCRIPT — Renders data to page
+//  MAIN SCRIPT — FIXED VERSION
 // ═══════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Override with localStorage data if admin saved anything
   const saved = localStorage.getItem('ashyy_data');
   const data = saved ? JSON.parse(saved) : SITE_DATA;
 
@@ -13,10 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderResources(data.resources);
   renderProjects(data.projects);
   setupPopup();
-  setupSeeMore();
 });
 
-// ── SVG ICONS MAP ──────────────────────────
+// ── SVG ICONS ──────────────────────────────
 const ICONS = {
   instagram: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
@@ -46,108 +43,142 @@ function renderBanner(banner) {
 function renderProfile(profile) {
   if (!profile) return;
 
-  const nameEl = document.getElementById('profileName');
+  const nameEl    = document.getElementById('profileName');
   const taglineEl = document.getElementById('profileTagline');
-  const photoEl = document.getElementById('profilePhoto');
+  const photoEl   = document.getElementById('profilePhoto');
   const socialsEl = document.getElementById('socialLinks');
 
-  if (nameEl) nameEl.textContent = profile.name || '';
+  if (nameEl)    nameEl.textContent    = profile.name    || '';
   if (taglineEl) taglineEl.textContent = profile.tagline || '';
   if (photoEl && profile.photo) {
     photoEl.src = profile.photo;
     photoEl.alt = profile.name || 'Profile';
   }
 
-  // Render socials
   if (socialsEl && profile.socials) {
-    socialsEl.innerHTML = profile.socials
-      .map(s => `
-        <a href="${s.url}" target="_blank" rel="noopener noreferrer"
-           class="social-link" title="${s.name}" aria-label="${s.name}">
-          ${ICONS[s.icon] || ''}
-        </a>
-      `).join('');
+    socialsEl.innerHTML = profile.socials.map(s => `
+      <a href="${s.url}"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="social-link"
+         title="${s.name}"
+         aria-label="${s.name}">
+        ${ICONS[s.icon] || ''}
+      </a>
+    `).join('');
   }
 }
 
-// ── RENDER RESOURCES ───────────────────────
+// ═══════════════════════════════════════════
+//  RESOURCES — DEFAULT 2 SHOW, SEE MORE/LESS
+// ═══════════════════════════════════════════
+
+// ✅ Default 2 dikhao (pehle 4 tha, ab 2)
+const DEFAULT_SHOW = 2;
+
 let allResources = [];
-let showingCount = 4;
+let isExpanded   = false;   // track state
 
 function renderResources(resources) {
   allResources = (resources || []).filter(r => r.visible !== false);
 
-  const grid = document.getElementById('resourceGrid');
-  const countEl = document.getElementById('resourceCount');
+  const grid     = document.getElementById('resourceGrid');
+  const countEl  = document.getElementById('resourceCount');
+  const seeMoreBtn = document.getElementById('seeMoreBtn');
 
-  // Update count
+  // Count update
   if (countEl) {
-    countEl.textContent = `${allResources.length} video${allResources.length !== 1 ? 's' : ''}`;
+    countEl.textContent =
+      `${allResources.length} video${allResources.length !== 1 ? 's' : ''}`;
   }
 
-  // If no resources → keep skeleton
+  // Agar resources empty hain → skeleton rahega
   if (allResources.length === 0) {
-    // Skeleton stays as is (already in HTML)
+    // Skeleton already HTML me hai, bas btn hide karo
+    if (seeMoreBtn) seeMoreBtn.style.display = 'none';
     return;
   }
 
-  // Clear skeleton, render cards
-  if (grid) {
-    grid.innerHTML = '';
-    renderResourceCards(grid, showingCount);
-  }
+  // Resources hain → skeleton hatao, cards banao
+  isExpanded = false;
+  drawCards(grid);
 
-  // Show/hide "See more"
-  const seeMoreBtn = document.getElementById('seeMoreBtn');
+  // See More button logic
   if (seeMoreBtn) {
-    seeMoreBtn.style.display = allResources.length > 4 ? 'flex' : 'none';
+    // Sirf tab dikhao jab resources DEFAULT_SHOW se zyada hoon
+    if (allResources.length > DEFAULT_SHOW) {
+      seeMoreBtn.style.display = 'flex';
+      updateSeeMoreBtn(seeMoreBtn);
+    } else {
+      seeMoreBtn.style.display = 'none';
+    }
+
+    // ✅ Pehle wala listener hata ke naya lagao (duplicate prevent)
+    const newBtn = seeMoreBtn.cloneNode(true);
+    seeMoreBtn.parentNode.replaceChild(newBtn, seeMoreBtn);
+
+    newBtn.addEventListener('click', () => {
+      isExpanded = !isExpanded;
+      drawCards(grid);
+      updateSeeMoreBtn(newBtn);
+    });
   }
 }
 
-function renderResourceCards(grid, count) {
+// Cards draw karo based on isExpanded
+function drawCards(grid) {
+  const count  = isExpanded ? allResources.length : DEFAULT_SHOW;
   const toShow = allResources.slice(0, count);
+
   grid.innerHTML = toShow.map(r => `
-    <div class="resource-card" data-link="${r.link || '#'}" data-title="${r.title || ''}">
-      <img src="${r.thumbnail}" alt="${r.title || 'Resource'}"
-           loading="lazy"
-           onerror="this.style.background='#eee'" />
+    <div class="resource-card"
+         data-link="${encodeURIComponent(r.link || '')}"
+         data-title="${r.title || ''}">
+      <img
+        src="${r.thumbnail}"
+        alt="${r.title || 'Resource'}"
+        loading="lazy"
+        onerror="this.style.background='#eee'"
+      />
       <div class="card-overlay">
-        ${r.tag ? `<span class="card-tag">${r.tag}</span>` : '<span></span>'}
+        ${r.tag
+          ? `<span class="card-tag">${r.tag}</span>`
+          : `<span></span>`
+        }
         <span class="card-title">${r.title || ''}</span>
       </div>
     </div>
   `).join('');
 
-  // Attach click events
+  // ✅ Click event — popup open
   grid.querySelectorAll('.resource-card').forEach(card => {
     card.addEventListener('click', () => {
-      openPopup(card.dataset.link, card.dataset.title);
+      // ✅ decode karo link ko correctly
+      const link  = decodeURIComponent(card.dataset.link);
+      const title = card.dataset.title;
+      openPopup(link, title);
     });
   });
 }
 
-// ── SEE MORE ───────────────────────────────
-function setupSeeMore() {
-  const btn = document.getElementById('seeMoreBtn');
-  const grid = document.getElementById('resourceGrid');
-  if (!btn) return;
+// Button text + icon update
+function updateSeeMoreBtn(btn) {
+  const span = btn.querySelector('span');
+  const svg  = btn.querySelector('svg');
 
-  let expanded = false;
-
-  btn.addEventListener('click', () => {
-    expanded = !expanded;
-    showingCount = expanded ? allResources.length : 4;
-
-    if (allResources.length > 0 && grid) {
-      renderResourceCards(grid, showingCount);
-    }
-
-    btn.classList.toggle('expanded', expanded);
-    btn.querySelector('span').textContent = expanded ? 'See less' : 'See more';
-  });
+  if (isExpanded) {
+    if (span) span.textContent = 'See less';
+    if (svg)  svg.style.transform = 'rotate(180deg)';
+  } else {
+    if (span) span.textContent = 'See more';
+    if (svg)  svg.style.transform = 'rotate(0deg)';
+  }
 }
 
-// ── RENDER PROJECTS ────────────────────────
+// ═══════════════════════════════════════════
+//  PROJECTS — LINK BUG FIXED
+// ═══════════════════════════════════════════
+
 function renderProjects(projects) {
   const list = document.getElementById('buildingList');
   if (!list) return;
@@ -162,71 +193,92 @@ function renderProjects(projects) {
     return;
   }
 
-  list.innerHTML = visible.map(p => `
-    <a href="${p.link || '#'}" target="_blank" rel="noopener noreferrer"
-       class="building-item" ${!p.link ? 'onclick="return false"' : ''}>
+  list.innerHTML = visible.map(p => {
+    // ✅ FIX: Agar link nahi hai ya empty hai toh href="#" aur click disable
+    const hasLink = p.link && p.link.trim() !== '';
 
-      <div class="building-icon">
-        <img src="${p.icon}" alt="${p.name}" loading="lazy"
-             onerror="this.style.background='#eee';this.style.display='none'" />
-      </div>
-
-      <div class="building-info">
-        <div class="building-info-top">
-          <span class="building-name">${p.name}</span>
-          ${renderTag(p.tag)}
+    return `
+      <a
+        class="building-item"
+        href="${hasLink ? p.link.trim() : '#'}"
+        ${hasLink ? 'target="_blank" rel="noopener noreferrer"' : ''}
+        ${!hasLink ? 'onclick="event.preventDefault()"' : ''}
+        data-link="${hasLink ? p.link.trim() : ''}"
+      >
+        <div class="building-icon">
+          <img
+            src="${p.icon || ''}"
+            alt="${p.name || ''}"
+            loading="lazy"
+            onerror="this.parentElement.style.background='#eee'"
+          />
         </div>
-        <div class="building-desc">${p.description || ''}</div>
-      </div>
 
-      <svg class="building-arrow" width="18" height="18" viewBox="0 0 24 24"
-           fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-      </svg>
-    </a>
-  `).join('');
+        <div class="building-info">
+          <div class="building-info-top">
+            <span class="building-name">${p.name || ''}</span>
+            ${renderTag(p.tag)}
+          </div>
+          <div class="building-desc">${p.description || ''}</div>
+        </div>
+
+        <svg class="building-arrow" width="18" height="18"
+             viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H7M17 7v10"/>
+        </svg>
+      </a>
+    `;
+  }).join('');
 }
 
 function renderTag(tag) {
   if (!tag) return '';
   const map = {
     'COMING SOON': 'tag-coming',
-    'LIVE': 'tag-live',
-    'LATEST': 'tag-latest'
+    'LIVE':        'tag-live',
+    'LATEST':      'tag-latest'
   };
   const cls = map[tag.toUpperCase()] || 'tag-latest';
   return `<span class="tag ${cls}">${tag}</span>`;
 }
 
-// ── POPUP ──────────────────────────────────
+// ═══════════════════════════════════════════
+//  POPUP
+// ═══════════════════════════════════════════
+
 function setupPopup() {
-  const overlay = document.getElementById('popupOverlay');
+  const overlay  = document.getElementById('popupOverlay');
   const closeBtn = document.getElementById('popupClose');
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closePopup);
-  }
+  if (closeBtn) closeBtn.addEventListener('click', closePopup);
 
   if (overlay) {
-    overlay.addEventListener('click', (e) => {
+    overlay.addEventListener('click', e => {
       if (e.target === overlay) closePopup();
     });
   }
 
-  // ESC key
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closePopup();
   });
 }
 
 function openPopup(link, title) {
-  const overlay = document.getElementById('popupOverlay');
+  const overlay   = document.getElementById('popupOverlay');
   const popupLink = document.getElementById('popupLink');
-  const label = document.getElementById('popupLabel') ||
-                document.querySelector('.popup-label');
+  const label     = document.querySelector('.popup-label');
 
-  if (label) label.textContent = title ? `Link for: ${title}` : 'Link for this video';
-  if (popupLink) popupLink.href = link || '#';
+  if (label)     label.textContent = title
+                   ? `Link for: ${title}`
+                   : 'Link for this video';
+
+  // ✅ Direct set — encode/decode nahi, clean link
+  if (popupLink) {
+    popupLink.href        = link;
+    popupLink.textContent = 'Open Link ↗';
+  }
+
   if (overlay) overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
