@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin – Ashraful Alom</title>
+  <link rel="stylesheet" href="admin.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <h1 class="login-title">Admin Panel</h1>
+      <p class="login-sub">ashyy.in</p>
+      <div class="login-field">
+        <input type="password" id="passwordInput"
+               placeholder="Enter password"
+               autocomplete="current-password" />
+        <button id="loginBtn">Login</button>
+      </div>
+      <p class="login-error" id="loginError"></p>
+    </div>
+  </div>
+
+  <!-- ADMIN DASHBOARD -->
+  <div class="admin-wrap" id="adminWrap" style="display:none">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span>⚙️</span>
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-tab="banner">🔗 Banner</button>
+        <button class="nav-btn" data-tab="profile">👤 Profile</button>
+        <button class="nav-btn" data-tab="resources">📹 Resources</button>
+        <button class="nav-btn" data-tab="projects">🔨 Projects</button>
+      </nav>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Save Bar -->
+      <div class="save-bar">
+        <span class="save-status" id="saveStatus">Unsaved changes</span>
+        <button class="save-btn" id="saveBtn">💾 Save All</button>
+      </div>
+
+      <!-- ── TAB: BANNER ── -->
+      <div class="tab-panel active" id="tab-banner">
+        <h2 class="panel-title">Top Banner Link</h2>
+        <div class="form-group">
+          <label>Banner Text</label>
+          <input type="text" id="bannerText" placeholder="e.g. ashyy.in" />
+        </div>
+        <div class="form-group">
+          <label>Banner URL</label>
+          <input type="url" id="bannerUrl" placeholder="https://..." />
+        </div>
+      </div>
+
+      <!-- ── TAB: PROFILE ── -->
+      <div class="tab-panel" id="tab-profile">
+        <h2 class="panel-title">Profile Settings</h2>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" id="profileName" placeholder="Ashraful Alom" />
+        </div>
+        <div class="form-group">
+          <label>Tagline</label>
+          <input type="text" id="profileTagline" placeholder="Everything in one place." />
+        </div>
+        <div class="form-group">
+          <label>Profile Photo Path</label>
+          <input type="text" id="profilePhoto" placeholder="assets/images/profile.jpg" />
+          <small>Upload image to assets/images/ folder then write path here</small>
+        </div>
+        <h3 class="sub-title">Social Links</h3>
+        <div id="socialsEditor">
+          <!-- Injected by admin.js -->
+        </div>
+      </div>
+
+      <!-- ── TAB: RESOURCES ── -->
+      <div class="tab-panel" id="tab-resources">
+        <div class="panel-header">
+          <h2 class="panel-title">Resources</h2>
+          <button class="add-btn" id="addResourceBtn">+ Add Video</button>
+        </div>
+        <div class="items-list" id="resourcesList">
+          <!-- Injected -->
+        </div>
+      </div>
+
+      <!-- ── TAB: PROJECTS ── -->
+      <div class="tab-panel" id="tab-projects">
+        <div class="panel-header">
+          <h2 class="panel-title">Things I'm Building</h2>
+          <button class="add-btn" id="addProjectBtn">+ Add Project</button>
+        </div>
+        <div class="items-list" id="projectsList">
+          <!-- Injected -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL for Add/Edit -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box" id="modalBox">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add Item</h3>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Dynamic form -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" id="modalCancel">Cancel</button>
+        <button class="btn-confirm" id="modalConfirm">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
