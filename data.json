@@ -1,0 +1,30 @@
+{
+  "banner": {
+    "text": "ashyy.in",
+    "url": "https://ashyy.in"
+  },
+  "profile": {
+    "name": "Ashraful Alom",
+    "tagline": "Everything in one place.",
+    "photo": "assets/images/profile.jpg",
+    "socials": [
+      {
+        "name": "Instagram",
+        "url": "https://instagram.com/ashyy.in",
+        "icon": "instagram"
+      },
+      {
+        "name": "X",
+        "url": "https://x.com/ashyy_in",
+        "icon": "x"
+      },
+      {
+        "name": "LinkedIn",
+        "url": "https://linkedin.com/in/ashrafulalom",
+        "icon": "linkedin"
+      }
+    ]
+  },
+  "resources": [],
+  "projects": []
+}
