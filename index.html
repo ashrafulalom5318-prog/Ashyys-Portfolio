@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ashraful Alom – Everything in one place." />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Security Meta Tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Open Graph (looks good on share) -->
+  <meta property="og:title" content="Ashraful Alom" />
+  <meta property="og:description" content="Everything in one place." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ashyy.in" />
+
+  <title>Ashraful Alom</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--           TOP BANNER LINK               -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="top-banner" id="topBanner">
+    <a href="#" id="topBannerLink" target="_blank" rel="noopener noreferrer">
+      <span id="topBannerText">Loading...</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--           HERO / PROFILE                -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="hero">
+    <div class="profile-photo-wrap">
+      <img src="assets/images/profile.jpg" alt="Ashraful Alom" class="profile-photo" id="profilePhoto" />
+    </div>
+    <h1 class="profile-name" id="profileName">Ashraful Alom</h1>
+    <p class="profile-tagline" id="profileTagline">Everything in one place.</p>
+
+    <div class="social-links" id="socialLinks">
+      <!-- Injected by script.js -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--           RESOURCES SECTION             -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section resources-section">
+    <div class="section-header">
+      <h2 class="section-title">Resources</h2>
+      <span class="section-count" id="resourceCount">0 videos</span>
+    </div>
+
+    <button class="click-hint-btn" id="clickHintBtn">
+      <span>Click on the video to get the link</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+
+    <!-- Resource Grid -->
+    <div class="resource-grid" id="resourceGrid">
+      <!-- Skeleton Cards (shown before data loads) -->
+      <div class="resource-card skeleton-card">
+        <div class="skeleton-img"></div>
+      </div>
+      <div class="resource-card skeleton-card">
+        <div class="skeleton-img"></div>
+      </div>
+      <div class="resource-card skeleton-card">
+        <div class="skeleton-img"></div>
+      </div>
+      <div class="resource-card skeleton-card">
+        <div class="skeleton-img"></div>
+      </div>
+    </div>
+
+    <button class="see-more-btn" id="seeMoreBtn">
+      <span>See more</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--        THINGS I'M BUILDING              -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section building-section">
+    <div class="section-header">
+      <h2 class="section-title">Things I'm building</h2>
+    </div>
+
+    <div class="building-list" id="buildingList">
+      <!-- Injected by script.js -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!--              FOOTER                     -->
+  <!-- ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <p>&#174;2026 Ashraful Alom &bull; <a href="https://ashyy.in" target="_blank" rel="noopener noreferrer">ashyy.in</a></p>
+  </footer>
+
+  <!-- Resource Link Popup -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-box" id="popupBox">
+      <button class="popup-close" id="popupClose">&times;</button>
+      <p class="popup-label">Link for this video</p>
+      <a href="#" id="popupLink" target="_blank" rel="noopener noreferrer" class="popup-link-btn">
+        Open Link ↗
+      </a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
