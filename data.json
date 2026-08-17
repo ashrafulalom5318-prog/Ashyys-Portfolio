@@ -37,21 +37,21 @@
   ],
   "projects": [
     {
-      "id": 1786997183370,
-      "name": "Melodix",
-      "description": "a completely free music streaming app, build for happiness with iframe of YouTube.",
-      "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_0iwd36et",
-      "icon": "assets\/images\/projects\/img_1786974793742.jpg",
-      "tag": "LIVE",
-      "visible": true
-    },
-    {
       "id": 1786998030181,
       "name": "Mail Guard",
       "description": "AI-powered Gmail cleanup and email organization, built around your privacy and control.",
       "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_lwv2qljh",
       "icon": "assets\/images\/projects\/img_1786997918002.jpg",
       "tag": "COMING SOON",
+      "visible": true
+    },
+    {
+      "id": 1786998356304,
+      "name": "Melodix",
+      "description": "a free music streaming app",
+      "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_0iwd36et",
+      "icon": "assets\/images\/projects\/img_1786998351864.jpg",
+      "tag": "LIVE",
       "visible": true
     }
   ]
