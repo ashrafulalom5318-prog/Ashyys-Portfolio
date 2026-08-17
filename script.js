@@ -4,7 +4,7 @@
 
 // ✅ GitHub raw URL — data.json
 const DATA_URL =
-  'https://raw.githubusercontent.com/ashrafulalom5318-prog/Ashyy-Portfolio/main/data.json';
+  'https://raw.githubusercontent.com/ashrafulalom5318-prog/Ashyys-Portfolio/main/data.json';
 
 // Cache bust — har baar fresh data
 function fetchData() {
