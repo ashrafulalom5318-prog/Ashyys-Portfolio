@@ -25,7 +25,16 @@
       }
     ]
   },
-  "resources": [],
+  "resources": [
+    {
+      "id": 1786997407047,
+      "title": "About Me",
+      "link": "https:\/\/",
+      "thumbnail": "assets\/images\/resources\/img_1786997402254.jpg",
+      "tag": "LATEST",
+      "visible": true
+    }
+  ],
   "projects": [
     {
       "id": 1786997183370,
