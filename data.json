@@ -44,15 +44,6 @@
       "icon": "assets\/images\/projects\/img_1786997918002.jpg",
       "tag": "COMING SOON",
       "visible": true
-    },
-    {
-      "id": 1786998356304,
-      "name": "Melodix",
-      "description": "a free music streaming app",
-      "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_0iwd36et",
-      "icon": "assets\/images\/projects\/img_1786998351864.jpg",
-      "tag": "LIVE",
-      "visible": true
     }
   ]
 }
