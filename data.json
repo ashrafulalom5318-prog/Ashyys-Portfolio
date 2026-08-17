@@ -28,11 +28,11 @@
   "resources": [],
   "projects": [
     {
-      "id": 1786914970221,
+      "id": 1786974805080,
       "name": "Melodix",
       "description": "a completely free music streaming app, build for happiness with iframe of YouTube.",
-      "link": "https:\/\/ashrafulalom5318-prog.github.io\/AppHubs",
-      "icon": "assets\/images\/projects\/img_1786914965985.jpg",
+      "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_0iwd36et",
+      "icon": "assets\/images\/projects\/img_1786974793742.jpg",
       "tag": "LIVE",
       "visible": true
     }
