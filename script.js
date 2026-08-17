@@ -2,7 +2,7 @@
 //  SCRIPT.JS — GitHub data.json se fetch
 // ═══════════════════════════════════════════
 
-// ✅ GitHub raw URL — data.json
+// ✅ GitHub raw URL — CORRECT REPO NAME
 const DATA_URL =
   'https://raw.githubusercontent.com/ashrafulalom5318-prog/Ashyys-Portfolio/main/data.json';
 
@@ -37,6 +37,14 @@ function showError() {
   if (grid) {
     grid.innerHTML = `
       <div class="empty-state" style="grid-column:1/-1">
+        <p>Could not load data. Please try again.</p>
+      </div>`;
+  }
+
+  const list = document.getElementById('buildingList');
+  if (list) {
+    list.innerHTML = `
+      <div class="empty-state-projects">
         <p>Could not load data. Please try again.</p>
       </div>`;
   }
@@ -145,7 +153,7 @@ function renderResources(resources) {
           <span>Check back soon!</span>
         </div>`;
     }
-    if (hintBtn)   hintBtn.style.display   = 'none';
+    if (hintBtn)    hintBtn.style.display    = 'none';
     if (seeMoreBtn) seeMoreBtn.style.display = 'none';
     return;
   }
