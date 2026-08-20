@@ -53,6 +53,15 @@
       "icon": "assets\/images\/projects\/img_1787020405391.jpg",
       "tag": "LIVE",
       "visible": true
+    },
+    {
+      "id": 1787261004394,
+      "name": "Supa Ai",
+      "description": "An artificial intelligence build for vibe coder",
+      "link": "https:\/\/appzy-jade.vercel.app\/app.html?id=app_w9mbu0dw",
+      "icon": "assets\/images\/projects\/img_1787260998509.jpg",
+      "tag": "COMING SOON",
+      "visible": true
     }
   ]
 }
